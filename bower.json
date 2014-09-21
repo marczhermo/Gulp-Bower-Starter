@@ -1,0 +1,21 @@
+{
+  "name": "Gulp-Bower-Starter",
+  "version": "0.0.0",
+  "authors": [
+    "Marcz Hermo <marcz@lab1521.com>"
+  ],
+  "description": "Gulp Bower Bootstrap-Sass FontAwesome",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.2.0+2",
+    "fontawesome": "~4.2.0"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
+test/bower_components
+/vendor
+composer.phar
+composer.lock
+.env.*
+.DS_Store
+Thumbs.db

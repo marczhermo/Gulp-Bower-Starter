@@ -6,7 +6,7 @@ Gulp, Bower, Bootstrap Sass, FontAwesome Starter
 Based on Eric Barnes tutorial [Setting up Gulp, Bower, Bootstrap Sass, & FontAwesome](http://ericlbarnes.com/setting-gulp-bower-bootstrap-sass-fontawesome/)
 
 ```
-mkdir testproject && cs testproject
+mkdir testproject && cd testproject
 bower init
 bower install bootstrap-sass-official --save
 bower install fontawesome --save

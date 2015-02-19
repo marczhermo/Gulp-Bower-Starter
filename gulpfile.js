@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     bower = require('gulp-bower'),
     minifyCSS = require('gulp-minify-css'),
     sourcemaps = require('gulp-sourcemaps'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    livereload = require('gulp-livereload');
 
 var config = {
     resPath: './resources',
@@ -55,7 +56,8 @@ gulp.task('css', function() {
         .pipe(autoprefix('last 2 version'))
         .pipe(minifyCSS())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./public/css'));
+        .pipe(gulp.dest('./public/css'))
+        .pipe(livereload());
 });
 
 gulp.task('js', function() {
@@ -68,17 +70,22 @@ gulp.task('js', function() {
         .pipe(sourcemaps.init())
         .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./public/js'));
+        .pipe(gulp.dest('./public/js'))
+        .pipe(livereload());
 });
 
 gulp.task('html', function() {
     return gulp.src(config.resPath + '/*.*')
-        .pipe(gulp.dest('./public'));
+        .pipe(gulp.dest('./public'))
+        .pipe(livereload());
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
+    livereload.listen();
     gulp.watch(config.resPath + '/sass/**/*.scss', ['css']);
+    gulp.watch(config.resPath + '/js/app.js', ['js']);
+    gulp.watch(config.resPath + '/index.html', ['html']);
 });
 
 gulp.task('default', ['bower', 'icons', 'fontawesome', 'glyphicons', 'js', 'html']);

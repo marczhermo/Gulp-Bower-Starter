@@ -75,7 +75,13 @@ gulp.task('js', function() {
 });
 
 gulp.task('html', function() {
-    return gulp.src(config.resPath + '/*.*')
+    return gulp.src(config.resPath + '/index.html')
+        .pipe(gulp.dest('./public'))
+        .pipe(livereload());
+});
+
+gulp.task('favicon', function() {
+    return gulp.src(config.resPath + '/favicon.ico')
         .pipe(gulp.dest('./public'))
         .pipe(livereload());
 });
@@ -88,4 +94,4 @@ gulp.task('watch', function() {
     gulp.watch(config.resPath + '/index.html', ['html']);
 });
 
-gulp.task('default', ['bower', 'icons', 'fontawesome', 'glyphicons', 'js', 'html']);
+gulp.task('default', ['bower', 'icons', 'fontawesome', 'glyphicons', 'js', 'html', 'favicon']);

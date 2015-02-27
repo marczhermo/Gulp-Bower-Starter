@@ -1,5 +1,5 @@
 // Core variables and mixins
-@import "variables";
+@import "variables";//copied from bootstrap to resources/sass
 @import "bootstrap/mixins";
 
 // Reset and dependencies
@@ -13,7 +13,7 @@
 @import "bootstrap/code";
 @import "bootstrap/grid";
 @import "bootstrap/tables";
-@import "bootstrap/forms";
+@import "forms";//copied from bootstrap to resources/sass
 @import "bootstrap/buttons";
 
 // Components
@@ -50,4 +50,5 @@
 @import "bootstrap/responsive-utilities";
 
 // Website specifics
+@import "fonts";
 @import "website";

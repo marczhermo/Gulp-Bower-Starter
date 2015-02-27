@@ -1,7 +1,202 @@
 body {
-  padding-top: 50px;
+  font-family: 'rokkittregular';
+  color: #e1e1e1;
+  font-size: 20px;
+  line-height: 30px;
 }
-.starter-template {
-  padding: 40px 15px;
+#hdr_main {
+  background: url('../img/vineyard-new-zealand-for-sale.jpg') no-repeat center top;
+  background-size: cover;
+  min-height: 300px;
+  border-bottom: 2px solid #000;
+  box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.50);
+  position: relative;
+  z-index: 1;
+  .title {
+    margin: 0;
+    padding: 0 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .title-text {
+    display: block;
+    height: 66px;
+    position: absolute;
+    top: -70px;
+    overflow: hidden;
+  }
+}
+#hdr {
+  padding: 180px 0 50px;
+  img {
+	width: 128px;
+	height: 128px;
+  }
+}
+
+
+.for-sale {
+  margin: 0 auto;
+  width: 162px;
+  height: 50px;
+  position: relative;
+  &-link {
+    width: 162px;
+    height: 50px;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 1;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #ffffff;
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+    font-family: 'rokkittregular';
+    line-height: 48px;
+    font-size: 32px;
+    &:hover {
+      text-decoration: none;
+      color: #ffffff;
+      ~ .for-sale-bg {
+        opacity: 0;
+      }
+    }
+    &:active {
+      color: #ffffff;
+    }
+    &:visited {
+      color: #ffffff;
+    }
+  }
+  &-bg {
+    width: 162px;
+    height: 50px;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 0;
+    background: #ffffff;
+    opacity: 0.2;
+  }
+}
+.block-quote {
+  margin-top: 130px;
+  min-height: 131px;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #b8b01a;
+  &-text {
+    margin: 0;
+    min-height: 130px;
+    font-size: 44px;
+    color: #fffcbd;
+    line-height: 60px;
+    text-align: center;
+    font-family: 'slabo_27pxregular';
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1;
+  }
+  &-bg {
+    display: block;
+    width: 100%;
+    height: 700px;
+    background: #000;
+    opacity: 0.70;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+  }
+}
+@media (max-width: 540px) {
+  #hdr {
+    padding: 30px 0;
+  }
+  #hdr_main .title img {
+    @include img-responsive;
+  }
+  .for-sale-link:hover ~ .for-sale-bg {
+    opacity: 0.7;
+  }
+  .for-sale-bg {
+    background: #b8b01a;
+    opacity: 1;
+  }
+  .block-quote {
+    margin-top: 30px;
+    &-text {
+      font-size: 30px;
+      line-height: 50px;
+    }
+  }
+}
+
+#information {
+  padding: 80px 0;
+  background: #e6e9ee;
+  position: relative;
+  z-index: 0;
+  p {
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+    margin-top: 34px;
+    margin-bottom: 0;
+  }
+  p:first-child {
+    margin-top: 0;
+  }
+}
+
+#contact {
+  padding: 36px 0;
+  background: #4f6063;
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  border-top: 1px solid #282e30;
+  box-shadow: 0px -4px 4px 0px rgba(107,107,107,1);
+  color: #e1e1e1;
+  font-size: 20px;
+  line-height: 30px;
+  h2 {
+    font-family: 'playfair_displayregular';
+    font-size: 30px;
+    line-height: 40px;
+    margin: 0 0 30px;
+  }
+}
+.btn {
+  &.refresh {
+    height: 42px;
+  }
+  .glyphicon {
+    top: 4px;
+  }
+}
+
+.has-feedback {
+  .glyphicon-ok {
+    color: #3c763d;
+  }
+  .glyphicon-remove {
+    color: #a94442;
+  }
+}
+
+
+#ftr {
+  padding: 40px 0;
+  background: #2e2f30;
+  position: relative;
+  z-index: 1;
+  color: #e1e1e1;
+  font-size: 20px;
+  line-height: 20px;
+  font-family: 'rokkittregular';
   text-align: center;
+  p {
+    margin: 0;
+  }
 }
+

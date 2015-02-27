@@ -3,6 +3,7 @@ node_modules
 .tmp
 .sass-cache
 bower_components
+mailoutput
 test/bower_components
 /vendor
 composer.phar

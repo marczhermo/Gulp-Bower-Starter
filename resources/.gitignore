@@ -1,0 +1,9 @@
+tools/phing-metadata
+.buildpath
+.project
+.settings
+.idea
+.DS_Store
+error/
+stats/
+nbproject/

@@ -11,6 +11,7 @@ bower init
 bower install bootstrap-sass-official --save
 bower install fontawesome --save
 bower install https://github.com/cferdinandi/smooth-scroll.git --save-dev
+sudo su -c "gem install sass"
 cat > package.json
 {}
 ^C

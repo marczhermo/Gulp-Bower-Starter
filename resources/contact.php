@@ -1,6 +1,8 @@
 <?php
 
-class AntiSpam {
+
+class AntiSpam
+{
 
     protected $keyServer;
     protected $keySecret;
@@ -27,10 +29,10 @@ class AntiSpam {
 
     protected function generate()
     {
-        $var1     = rand(1, 9);
-        $var2     = rand(1, 9);
-        $plus     = rand(0, 1) ? 'plus' : 'add';
-        $answer   =  $var1 + $var2;
+        $var1 = rand(1, 9);
+        $var2 = rand(1, 9);
+        $plus = rand(0, 1) ? 'plus' : 'add';
+        $answer = $var1 + $var2;
         $question = "{$var1} {$plus} {$var2}";
 
         $keyServer = $this->keyServer . sha1(microtime());
@@ -40,44 +42,56 @@ class AntiSpam {
         $_SESSION['AntiSpamServer'] = $keyServer;
         $_SESSION['AntiSpamSecret'] = $keySecret;
         $_SESSION['AntiSpamAnswer'] = $answer;
-        $_SESSION['AntiSpamToken']  = $keyToken;
+        $_SESSION['AntiSpamToken'] = $keyToken;
 
         return array('question' => $question, 'client' => $keyToken);
     }
 
     protected function compute($answer, $token)
     {
-        if ( ! isset($_SESSION['AntiSpamServer'])) return false;
-        if ( ! isset($_SESSION['AntiSpamSecret'])) return false;
-        if ( ! isset($_SESSION['AntiSpamAnswer'])) return false;
-        if ( ! isset($_SESSION['AntiSpamToken'])) return false;
+        if ( ! isset($_SESSION['AntiSpamServer'])) {
+            return false;
+        }
+        if ( ! isset($_SESSION['AntiSpamSecret'])) {
+            return false;
+        }
+        if ( ! isset($_SESSION['AntiSpamAnswer'])) {
+            return false;
+        }
+        if ( ! isset($_SESSION['AntiSpamToken'])) {
+            return false;
+        }
 
         $keyServer = $_SESSION['AntiSpamServer'];
         $keySecret = $_SESSION['AntiSpamSecret'];
         $keyAnswer = $_SESSION['AntiSpamAnswer'];
-        $keyToken  = $_SESSION['AntiSpamToken'];
+        $keyToken = $_SESSION['AntiSpamToken'];
 
-	    $this->generate();
+        $this->generate();
 
-	    if ((int) $answer !== $keyAnswer) {
-		    var_dump($answer);
-		    var_dump($keyAnswer);
-	    }
+        if ((int) $answer !== $keyAnswer) {
+            return false;
+        }
 
-	    if ($token !== $keyToken) {
-		    var_dump($token);
-		    var_dump($keyToken);
-	    }
+        if ($token !== $keyToken) {
+            return false;
+        }
 
-	    if ($answer !== (string) $keyAnswer) return false;
-	    if ($token !== $keyToken) return false;
+        if ($answer !== (string) $keyAnswer) {
+            return false;
+        }
+        if ($token !== $keyToken) {
+            return false;
+        }
 
-	    return ((crypt($keySecret, sha1($keyServer)) === $token ) ? true : false);
+        return ((crypt($keySecret, sha1($keyServer)) === $token) ? true : false);
     }
 
 }
 
-class FormCheck {
+
+class FormCheck
+{
 
     protected static $input;
 
@@ -99,14 +113,16 @@ class FormCheck {
     {
         $email = self::getInput($email);
 
-        return (preg_match( "/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9_.-]+.[a-z]{2,3}$/", $email)) ? $email : null;
+        return (preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9_.-]+.[a-z]{2,3}$/", $email)) ? $email : null;
     }
 
     public static function required($field)
     {
         $field = self::getInput($field);
 
-        if (trim($field) == '') return null;
+        if (trim($field) == '') {
+            return null;
+        }
 
         return $field;
     }
@@ -119,7 +135,9 @@ class FormCheck {
     }
 }
 
-class ContactForm {
+
+class ContactForm
+{
 
     protected $fields = array();
     protected $callbacks = array();
@@ -171,8 +189,8 @@ class ContactForm {
         $filters = explode('|', $checkString);
         FormCheck::setSource($this->sourceInput());
 
-        foreach($filters as $filter) {
-            if ( ! method_exists('FormCheck',$filter)) {
+        foreach ($filters as $filter) {
+            if ( ! method_exists('FormCheck', $filter)) {
                 return false;
             }
 
@@ -191,13 +209,13 @@ class ContactForm {
     public function validate()
     {
         $fields = $this->fields;
-        foreach($fields as $key => $checksString) {
+        foreach ($fields as $key => $checksString) {
             if ( ! $this->filterField($key, $checksString)) {
                 $this->notices[] = array($key => $checksString);
             }
         }
 
-        foreach($this->callbacks as $filters) {
+        foreach ($this->callbacks as $filters) {
             $filter = $filters['method'];
             $fields = $filters['args'];
 
@@ -209,7 +227,7 @@ class ContactForm {
 
             if ( ! call_user_func_array($filter, $inputs)) {
                 $this->notices[] = array('filter' => $filterName . ' did not passed.');
-                foreach($inputs as $key => $value) {
+                foreach ($inputs as $key => $value) {
                     $this->notices[] = array($key => $value);
                 }
             }
@@ -225,9 +243,12 @@ class ContactForm {
 
 }
 
-class JSON {
 
-    public static function makeHeaders() {
+class JSON
+{
+
+    public static function makeHeaders()
+    {
         header("Content-Type: application/json; charset=utf-8");
         header("Expires: on, 01 Jan 1970 00:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -236,14 +257,17 @@ class JSON {
         header("Pragma: no-cache");
     }
 
-    public static function output($values) {
+    public static function output($values)
+    {
         self::makeHeaders();
         echo json_encode($values);
         exit;
     }
 }
 
-class Mailer {
+
+class Mailer
+{
 
     public $subject;
     public $email;
@@ -263,8 +287,8 @@ class Mailer {
     {
         $template = $this->message;
 
-        foreach($inputs as $key => $value) {
-            $template = str_replace('{{'.$key.'}}', $value, $template);
+        foreach ($inputs as $key => $value) {
+            $template = str_replace('{{' . $key . '}}', $value, $template);
         }
 
         $this->message = $template;
@@ -277,7 +301,7 @@ class Mailer {
 
     public function send()
     {
-        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= 'From: marcz@lab1521.com' . "\r\n";
 
@@ -285,6 +309,7 @@ class Mailer {
     }
 
 }
+
 
 $emailTemplate = '<table>
         <tr><th>First Name</th><td>{{nameFirst}}</td></tr>
@@ -306,13 +331,13 @@ if (isset($_POST['antiSpamAnswer']) && isset($_POST['antiSpamToken'])) {
     $form = new ContactForm;
     $form->setFields(
         array(
-            'nameFirst' => 'required|sanitize',
-            'nameLast' => 'required|sanitize',
-            'email' => 'required|email',
-            'phone' => 'required|sanitize',
-            'message' => 'required|sanitize',
+            'nameFirst'      => 'required|sanitize',
+            'nameLast'       => 'required|sanitize',
+            'email'          => 'required|email',
+            'phone'          => 'required|sanitize',
+            'message'        => 'required|sanitize',
             'antiSpamAnswer' => 'required|sanitize',
-            'antiSpamToken' => 'required|sanitize'
+            'antiSpamToken'  => 'required|sanitize'
         )
     );
 

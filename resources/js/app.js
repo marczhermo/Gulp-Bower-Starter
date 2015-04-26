@@ -154,7 +154,7 @@ smoothScroll.init({
             var glyphicon = $form.find('[name='+input['name']+'] ~ .glyphicon');
             if (input['value'] == '') {
                 glyphicon.removeClass('glyphicon-asterisk glyphicon-ok').addClass('glyphicon-remove');
-	            $form.find('[name='+input['name']+']').focus();
+                $form.find('[name='+input['name']+']').focus();
                 return;
             } else {
                 glyphicon.removeClass('glyphicon-asterisk glyphicon-remove').addClass('glyphicon-ok');

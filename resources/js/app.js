@@ -30,6 +30,7 @@ smoothScroll.init({
         this.answer = '';
         this.token = '';
         this.url = 'contact.php';
+        this.deferred = $.Deferred();
 
         this.init();
     };
@@ -40,18 +41,35 @@ smoothScroll.init({
     };
 
     AntiSpam.prototype.reload = function () {
-        $.when(
-            $.ajax({
-                url: this.url,
-                dataType: 'json'
-                })
-            )
-        .done(
-            this.update.bind(this)
-        );
+        this.deferred = $.ajax({
+            url: this.url,
+            dataType: 'json'
+        }).promise();
+
+        this.deferred.always(this.update.bind(this));
+        this.deferred.always(this.sample.call(this));
+        this.deferred.always(function(data){console.log('func');console.log(data);});
+        //old style
+        //$.when(
+        //    $.ajax({
+        //        url: this.url,
+        //        dataType: 'json'
+        //    })
+        //)
+        //.done(
+        //    this.update.bind(this)
+        //);
+    };
+
+    AntiSpam.prototype.sample = function() {
+        this.deferred.always(function(data){
+            console.log('sample');
+            console.log(data);
+        });
     };
 
     AntiSpam.prototype.update = function (data) {
+        console.log('update');console.log(data);
         this.$inputToken.val(data['client']);
         this.$inputQuestion.text(data['question']);
         this.$inputAnswer.val('');

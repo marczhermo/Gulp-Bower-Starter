@@ -11,6 +11,8 @@ bower init
 bower install bootstrap-sass-official --save
 bower install fontawesome --save
 bower install https://github.com/cferdinandi/smooth-scroll.git --save-dev
+bower install rxjs --save
+bower install rxjs-jquery --save
 sudo su -c "gem install sass"
 cat > package.json
 {}

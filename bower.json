@@ -16,7 +16,9 @@
   ],
   "dependencies": {
     "bootstrap-sass-official": "~3.3.3",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
+    "rxjs": "~2.5.2",
+    "rxjs-jquery": "~1.1.7"
   },
   "devDependencies": {
     "smooth-scroll": "https://github.com/cferdinandi/smooth-scroll.git"

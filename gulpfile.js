@@ -76,6 +76,8 @@ gulp.task('compress', function() {
 gulp.task('js', ['compress'],function() {
     return gulp.src([
             config.bowerDir + '/jquery/dist/jquery.min.js',
+            config.bowerDir + '/rxjs/dist/rx.lite.min.js',
+            config.bowerDir + '/rxjs-jquery/rx.jquery.js',
             config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap.min.js',
             config.bowerDir + '/smooth-scroll/dist/js/smooth-scroll.min.js',
             config.pubPath + '/js/app.js',

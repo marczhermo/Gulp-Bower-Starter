@@ -3,6 +3,11 @@
  * Author: Marcz Hermo
  * Email: marcz@lab1521.com
  * Copyright 2015 Lab1521 Limited
+ *
+ * Codes here can be used in production.
+ * Although I have done some testing on the ff:
+ *     1. $.Deferred() implementation
+ *     2. Rx-JS with jQuery implementation
  */
 smoothScroll.init({
     speed: 1000,
@@ -85,6 +90,58 @@ smoothScroll.init({
         this.antiSpam = antiSpam;
         this.$form = form;
         this.url = 'contact.php';
+        this.search = this.searchObservable();
+    };
+
+    ContactForm.prototype.searchWikipedia = function(term) {
+        return $.ajaxAsObservable({
+            url: 'http://en.wikipedia.org/w/api.php',
+            data: {
+                action: 'opensearch',
+                search: term,
+                format: 'json'
+            },
+            dataType: 'jsonp'
+        });
+    };
+
+    ContactForm.prototype.searchObservable = function() {
+        var that = this;
+        var results = this.$form.find('#results');
+
+        var searcher = this.$form.find('#search')
+            .keyupAsObservable()
+            .map( function (ev) {
+                return $(ev.target).val();
+            })
+            .filter( function (text) {
+                return text.length > 2;
+            })
+            .throttle(500)
+            .distinctUntilChanged();
+
+        //flatMapLatest can be chained with searcher var above but separated for clarity
+        var suggestions = searcher.flatMapLatest(function (text) {
+            return that.searchWikipedia(text);
+        });
+
+        //Subscribe method has to args, arg1 - success, arg2 - fail
+        var subscription = suggestions.subscribe(
+            function (data) {
+                //Need to investigate @var data here as it depends on the API return values
+                results.empty();
+                $.each(data.data[1], function (index, value) {
+                    console.log(index);
+                    console.log(value);
+                    $('<li>' + value + '</li>').appendTo(results);
+                });
+            },
+            function (e) {
+                results.empty();
+                console.log(e);
+                $('<li>Error: HTTP:' + e.jqXHR.status + ' - ' + e.textStatus + '</li>').appendTo(results);
+            }
+        );
     };
 
     ContactForm.prototype.post = function (data) {
@@ -200,6 +257,5 @@ smoothScroll.init({
 
             event.preventDefault();
         });
-
     });
 })(jQuery);
